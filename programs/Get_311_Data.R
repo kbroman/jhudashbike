@@ -13,15 +13,17 @@ library(data.table)
 library(stringr)
 library(ggmap)
 rerun = FALSE
-homedir = path.expand("~/Dropbox/jhudash/jhudashbike")
-datadir = file.path(homedir, "data")
-outdir = file.path(homedir, "results")
+homedir = datadir = "~/"
+# homedir = path.expand("~/Dropbox/jhudash/jhudashbike")
+# datadir = file.path(homedir, "data")
+# outdir = file.path(homedir, "results")
 
 socrata_app_token = readLines(
     file.path(homedir, "socrata_api_key.txt")
     )
 get.lat.long.baltimore <- function(block, 
     source = "google", ...){
+    print(length(block))
   location <- paste0(block, ' Baltimore, MD')
   my.map = geocode(location, 
     source = source, ...)
@@ -76,10 +78,17 @@ if (!file.exists(fname) | rerun){
         row.names = FALSE)
 }
 
+fnames = file.path(datadir, 
+    paste0(codes, ".csv"))
+
 all_data = vector(mode = "list", 
     length = length(codes))
 names(all_data) = codes
-icode = codes[3]
+
+iid <- as.numeric(Sys.getenv("SGE_TASK_ID"))
+if (is.na(iid)) iid <- 10
+
+icode = codes[iid]
 # for (icode in codes){
     fname = file.path(datadir, 
         paste0(icode, ".csv"))
@@ -100,14 +109,16 @@ icode = codes[3]
                 log_ind = df$i == iind
                 ddf = df[ log_ind, ]
                 addresses = get.lat.long.baltimore(
-                    ddf$address
+                    ddf$address,
+                    source = "dsk"
                     )
                 df$lat[log_ind] = addresses$lat
                 df$long[log_ind] = addresses$lon
             }
         } else {
             addresses = get.lat.long.baltimore(
-                df$address
+                df$address,
+                    source = "dsk"
                 )
             df = cbind(df, addresses)
         }
@@ -119,29 +130,31 @@ icode = codes[3]
             as.is=TRUE)
     }
 
+###############################
+# Stopped here
+###############################
 
-    
-    all_data[[icode]] = df
-    print(icode)
-# }
-    # all_data = llply(codes, coder, 
-    #     .progress = "text")
-max_n = sapply(all_data, nrow)
-all_data = all_data[ max_n > 0]
+#     all_data[[icode]] = df
+#     print(icode)
+# # }
+#     # all_data = llply(codes, coder, 
+#     #     .progress = "text")
+# max_n = sapply(all_data, nrow)
+# all_data = all_data[ max_n > 0]
 
-all_ncols = sapply(all_data, ncol)
-cn = lapply(all_data, colnames)
-all_cn = sort(unique(unlist(cn)))
+# all_ncols = sapply(all_data, ncol)
+# cn = lapply(all_data, colnames)
+# all_cn = sort(unique(unlist(cn)))
 
-all_df = llply(all_data, function(x){
-    cnx = colnames(x)
-    icn = setdiff(all_cn,cnx) 
-    for (iicn in seq_along(icn)){
-        x[, icn[iicn]] = NA
-    }
-    x
-})
-all_df = do.call("rbind", all_df)
+# all_df = llply(all_data, function(x){
+#     cnx = colnames(x)
+#     icn = setdiff(all_cn,cnx) 
+#     for (iicn in seq_along(icn)){
+#         x[, icn[iicn]] = NA
+#     }
+#     x
+# })
+# all_df = do.call("rbind", all_df)
 
 
 
