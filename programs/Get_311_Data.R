@@ -80,7 +80,7 @@ all_data = vector(mode = "list",
     length = length(codes))
 names(all_data) = codes
 icode = codes[3]
-for (icode in codes){
+# for (icode in codes){
     fname = file.path(datadir, 
         paste0(icode, ".csv"))
     if (!file.exists(fname) | rerun){    
@@ -118,9 +118,12 @@ for (icode in codes){
         df = read.csv(fname, 
             as.is=TRUE)
     }
+
+
+    
     all_data[[icode]] = df
     print(icode)
-}
+# }
     # all_data = llply(codes, coder, 
     #     .progress = "text")
 max_n = sapply(all_data, nrow)
