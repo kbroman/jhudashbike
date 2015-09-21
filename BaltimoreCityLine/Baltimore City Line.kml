@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?><kml xmlns="http://www.opengis.net/kml/2.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opengis.net/kml/2.2 http://schemas.opengis.net/kml/2.2.0/ogckml22.xsd">
+   <Document xmlns:atom="http://purl.org/atom/ns#">
+      <name>geo_fy7v-tvcr:geo_fy7v-tvcr-1</name>
+      <LookAt>
+         <longitude>-76.62059723022884</longitude>
+         <latitude>39.28463794239751</latitude>
+         <altitude>30860.7944765364</altitude>
+         <range>24937.14063725891</range>
+         <tilt>0.0</tilt>
+         <heading>0.0</heading>
+         <altitudeMode>clampToGround</altitudeMode>
+      </LookAt>
+      <Placemark id="geo_fy7v-tvcr-1.1">
+         <name><![CDATA[geo_fy7v-tvcr-1.1]]></name>
+         <description><![CDATA[<h4>geo_fy7v-tvcr-1</h4>
+
+<ul class="textattributes">
+  
+  <li><strong><span class="atr-name">ID</span>:</strong> <span class="atr-value">0.0</span></li>
+  <li><strong><span class="atr-name">AREA</span>:</strong> <span class="atr-value">2.562713344E9</span></li>
+  <li><strong><span class="atr-name">PERIMETER</span>:</strong> <span class="atr-value">207126.51563</span></li>
+  <li><strong><span class="atr-name">BOUNDARY_</span>:</strong> <span class="atr-value">2.0</span></li>
+  <li><strong><span class="atr-name">BOUNDARY_I</span>:</strong> <span class="atr-value">0.0</span></li>
+  <li><strong><span class="atr-name">LENGTH</span>:</strong> <span class="atr-value">207126.513</span></li>
+  <li><strong><span class="atr-name">Shape_Leng</span>:</strong> <span class="atr-value">207126.513062</span></li>
+  <li><strong><span class="atr-name">_SocrataID</span>:</strong> <span class="atr-value">9gse-jwbv</span></li>
+</ul>
+]]></description>
+         <LookAt>
+            <longitude>-76.62059723022884</longitude>
+            <latitude>39.28463794239752</latitude>
+            <altitude>30860.79447652807</altitude>
+            <range>24937.140637252178</range>
+            <tilt>0.0</tilt>
+            <heading>0.0</heading>
+            <altitudeMode>clampToGround</altitudeMode>
+         </LookAt>
+         <Style>
+            <IconStyle>
+               <color>00ffffff</color>
+               <scale>0.4</scale>
+               <Icon>
+                  <href>http://icons.opengeo.org/markers/icon-line.1.png</href>
+               </Icon>
+            </IconStyle>
+            <LabelStyle>
+               <color>00ffffff</color>
+            </LabelStyle>
+            <LineStyle>
+               <color>7fff0000</color>
+               <width>2</width>
+            </LineStyle>
+         </Style>
+         <MultiGeometry>
+            <Point>
+               <coordinates>-76.52983346199512,39.23153129697572</coordinates>
+            </Point>
+            <LineString>
+               <coordinates>-76.7113,39.372 -76.5297,39.372 -76.5299,39.2096 -76.5497,39.1972 -76.5837,39.2081 -76.6116,39.2344 -76.7112,39.2778 -76.7113,39.372</coordinates>
+            </LineString>
+         </MultiGeometry>
+      </Placemark>
+   </Document>
+</kml>
