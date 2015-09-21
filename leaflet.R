@@ -1,7 +1,8 @@
+# getting lat and long with ggmap::geocode
 library(ggmap)
 baltimore <- geocode("Baltimore,MD", source="google")
 
-
+# simple plot of Baltiomre
 library(leaflet)
 leaflet() %>%
     setView(lng= -76.6121893, lat=39.2903848, zoom=13) %>%
@@ -13,7 +14,19 @@ bdy <- matrix(c(-76.7113,39.372, -76.5297,39.372, -76.5299,39.2096, -76.5497,39.
 bdy <- as.data.frame(bdy)
 colnames(bdy) <- c("lon", "lat")
 
+# baltimore city boundary on the map
 leaflet() %>%
     fitBounds(min(bdy$lon), min(bdy$lat), max(bdy$lon), max(bdy$lat)) %>%
     addProviderTiles("CartoDB.Positron") %>%
     addPolygons(lng=bdy$lon, lat=bdy$lat)
+
+# points on a map
+load("data/tows.RData") # example data
+leaflet() %>%
+    fitBounds(min(bdy$lon), min(bdy$lat), max(bdy$lon), max(bdy$lat)) %>%
+    addProviderTiles("CartoDB.Positron") %>%
+    addCircleMarkers(lng=tows$lon, lat=tows$lat,
+                     popup=paste0("$", tows$charge, "\n", tows$address),
+                     fillOpacity=0.5,
+                     color=ifelse(!is.na(tows$stolen) & tows$stolen==1, "Orchid", "slateblue"),
+                     radius=tows$charge/130+1)
