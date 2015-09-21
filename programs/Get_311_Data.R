@@ -78,19 +78,51 @@ if (!file.exists(fname) | rerun){
 
 all_data = vector(mode = "list", 
     length = length(codes))
-icode = codes[1]
+names(all_data) = codes
+icode = codes[3]
 for (icode in codes){
-    df = coder(icode)
-    df$methodreceived = NULL
-    df = unique(df)
-    df$address = str_trim(df$address)
-    addresses = get.lat.long.baltimore(
-        df$address
-        )
-
-    all_data = llply(codes, coder, 
-        .progress = "text")
+    fname = file.path(datadir, 
+        paste0(icode, ".csv"))
+    if (!file.exists(fname) | rerun){    
+        df = coder(icode)
+        df$methodreceived = NULL
+        df = unique(df)
+        df$address = str_trim(df$address)
+        n = 2500
+        if (nrow(df) > n){
+            ind = seq(1, ceiling(nrow(df)/n))
+            df$i = rep(
+                ind, 
+                each = n)[seq(nrow(df))]
+            iind = 1
+            df$lat = df$lon = NA
+            for (iind in ind){
+                log_ind = df$i == iind
+                ddf = df[ log_ind, ]
+                addresses = get.lat.long.baltimore(
+                    ddf$address
+                    )
+                df$lat[log_ind] = addresses$lat
+                df$long[log_ind] = addresses$lon
+            }
+        } else {
+            addresses = get.lat.long.baltimore(
+                df$address
+                )
+            df = cbind(df, addresses)
+        }
+        write.csv(x = df, 
+            file = fname, 
+            row.names = FALSE)  
+    } else {
+        df = read.csv(fname, 
+            as.is=TRUE)
+    }
+    all_data[[icode]] = df
+    print(icode)
 }
+    # all_data = llply(codes, coder, 
+    #     .progress = "text")
 max_n = sapply(all_data, nrow)
 all_data = all_data[ max_n > 0]
 
