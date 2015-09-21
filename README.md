@@ -1,26 +1,33 @@
-Bicycle safety in Baltimore
+## Bicycle safety in Baltimore
 
-Mission:  Characterize and map bicycle safety in Baltimore
+**Mission:  Characterize and map bicycle safety in Baltimore**
 
-Geocoding
+### Geocoding
+
 - ggmap package (function geocode), <https://github.com/dkahle/ggmap>
-the default source="dst" seems to be down, so use
-ggmap::geocode("Baltimore, MD", source="google")
+
+  the default `source="dst"` seems to be down for some people; if it
+  doesn't work, try `ggmap::geocode("Baltimore, MD", source="google")`
+
 - pelias, <https://github.com/pelias/pelias>
 
-Maps: leaflet <http://rstudio.github.io/leaflet/>
+## Maps
 
-NHTSA - FARS website, (possibly) to get accident data from Baltimore
-<http://www-fars.nhtsa.dot.gov//QueryTool/QuerySection/SelectYear.aspx>
+- leaflet <http://rstudio.github.io/leaflet/>
 
-Bikelanes:
-<https://data.baltimorecity.gov/Transportation/Bike-Lanes/xzfj-gyms>
+## Data sources
 
-Vehicle Collsions (investigated by state):
-<https://data.maryland.gov/Public-Safety/2012-Vehicle-Collisions-Investigated-by-State-Poli/pdvh-tf2u>
+- NHTSA - FARS website, (possibly) to get accident data from Baltimore
+  <http://www-fars.nhtsa.dot.gov//QueryTool/QuerySection/SelectYear.aspx>
 
-Maybe we can email these people to get the incident reports that they have?
-<https://www.bikemaryland.org/resources/incident-report/>
+- Bikelanes
+  <https://data.baltimorecity.gov/Transportation/Bike-Lanes/xzfj-gyms>
 
-Bike info
-<http://www.pedbikeinfo.org/data/factsheet_crash.cfm>
+- Vehicle Collsions (investigated by state):
+  <https://data.maryland.gov/Public-Safety/2012-Vehicle-Collisions-Investigated-by-State-Poli/pdvh-tf2u>
+
+- Maybe we can email these people to get the incident reports that they have?
+  <https://www.bikemaryland.org/resources/incident-report/>
+
+- Bike info
+  <http://www.pedbikeinfo.org/data/factsheet_crash.cfm>
