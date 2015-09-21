@@ -47,3 +47,24 @@ leaflet() %>%
                      radius=tows$charge/130+1) %>%
     addPolygons(lng=bdy$lon, lat=bdy$lat,
                 fill=FALSE, color="darkslateblue", opacity=0.4, weight=2)
+
+# click on/off the stolen/not
+stolen <- !is.na(tows$stolen) & tows$stolen==1
+leaflet() %>%
+    fitBounds(min(bdy$lon), min(bdy$lat), max(bdy$lon), max(bdy$lat)) %>%
+    addPolygons(lng=bdy$lon, lat=bdy$lat,
+                fill=FALSE, color="darkslateblue", opacity=0.4, weight=2) %>%
+    addProviderTiles("CartoDB.Positron", group="CartoDB") %>%
+    addProviderTiles("Stamen.TonerLite", group="TonerLite") %>%
+    addProviderTiles("Stamen.Watercolor", group="Watercolor") %>%
+    addCircleMarkers(lng=tows$lon[stolen], lat=tows$lat[stolen],
+                     popup=paste0("$", tows$charge[stolen], "\n", tows$address[stolen]),
+                     fillOpacity=0.5, color="Orchid",
+                     radius=tows$charge[stolen]/130+1, group="Stolen") %>%
+    addCircleMarkers(lng=tows$lon[!stolen], lat=tows$lat[!stolen],
+                     popup=paste0("$", tows$charge[!stolen], "\n", tows$address[!stolen]),
+                     fillOpacity=0.5, color="slateblue",
+                     radius=tows$charge[!stolen]/130+1, group="Not stolen") %>%
+    addLayersControl(baseGroups=c("CartoDB", "TonerLite", "Watercolor"),
+                     overlayGroups=c("Stolen", "Not stolen"),
+                     options=layersControlOptions(collapsed=FALSE))
