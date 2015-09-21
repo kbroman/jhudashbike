@@ -68,3 +68,16 @@ leaflet() %>%
     addLayersControl(baseGroups=c("CartoDB", "TonerLite", "Watercolor"),
                      overlayGroups=c("Stolen", "Not stolen"),
                      options=layersControlOptions(collapsed=FALSE))
+
+# points on a map, clustering closely-spaced points
+# (I don't really like this)
+leaflet() %>%
+    fitBounds(min(bdy$lon), min(bdy$lat), max(bdy$lon), max(bdy$lat)) %>%
+    addProviderTiles("CartoDB.Positron") %>%
+    addPolygons(lng=bdy$lon, lat=bdy$lat,
+                fill=FALSE, color="darkslateblue", opacity=0.4, weight=2) %>%
+    addCircleMarkers(lng=tows$lon, lat=tows$lat,
+                     popup=paste0("$", tows$charge, "\n", tows$address),
+                     fillOpacity=0.5,
+                     color="#444", radius=3,
+                     clusterOptions=markerClusterOptions())
