@@ -30,3 +30,20 @@ leaflet() %>%
                      fillOpacity=0.5,
                      color=ifelse(!is.na(tows$stolen) & tows$stolen==1, "Orchid", "slateblue"),
                      radius=tows$charge/130+1)
+
+leaflet() %>%
+    fitBounds(min(bdy$lon), min(bdy$lat), max(bdy$lon), max(bdy$lat)) %>%
+    addProviderTiles("CartoDB.Positron") %>%
+    addPolygons(lng=bdy$lon, lat=bdy$lat)
+
+# points on a map + baltimore boundary
+leaflet() %>%
+    fitBounds(min(bdy$lon), min(bdy$lat), max(bdy$lon), max(bdy$lat)) %>%
+    addProviderTiles("CartoDB.Positron") %>%
+    addCircleMarkers(lng=tows$lon, lat=tows$lat,
+                     popup=paste0("$", tows$charge, "\n", tows$address),
+                     fillOpacity=0.5,
+                     color=ifelse(!is.na(tows$stolen) & tows$stolen==1, "Orchid", "slateblue"),
+                     radius=tows$charge/130+1) %>%
+    addPolygons(lng=bdy$lon, lat=bdy$lat,
+                fill=FALSE, color="darkslateblue", opacity=0.4, weight=2)
