@@ -1,0 +1,4 @@
+"address","city","code","codedescription","createddate","duedate","neighborhood","servicerequestnum","state","status","statusdate","zip","activity","outcome","updateddate","lon","lat"
+"3601  PARKVIEW AVE","BALTIMORE CITY","WWSTORMS","WW-Storm Steel Plates","2014-08-18T23:10:08.000","2014-10-17T23:10:08.000","GROVE PARK","14-00621333","MD","CLOSED","2014-09-08T22:32:07.000","21207",NA,NA,NA,NA,NA
+"6106  NORTHWOOD DR","BALTIMORE CITY","WWSTORMS","WW-Storm Steel Plates","2014-08-18T18:55:48.000","2014-10-17T18:55:48.000","LAKE WALKER","14-00620689","MD","CLOSED","2014-08-18T23:24:43.000","21212",NA,NA,NA,NA,NA
+"MERIDENE DR & THE ALAMEDA","BALTIMORE CITY","WWSTORMS","WW-Storm Steel Plates","2014-08-14T17:54:42.000","2014-10-13T17:54:42.000","GLEN OAKS","14-00610838","MD","CLOSED","2014-08-19T16:14:52.000","21239","Plate removed","Closed","2014-08-19T16:14:00.000",NA,NA

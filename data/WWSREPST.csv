@@ -1,0 +1,4 @@
+"address","city","code","codedescription","createddate","duedate","neighborhood","servicerequestnum","state","status","statusdate","zip","lon","lat"
+"5506  GREENSPRING AVE","BALTIMORE","WWSREPST","WW-Surface Repair (Stripings)","2015-06-22T17:43:35.000","2015-07-22T17:43:35.000","MOUNT WASHINGTON","15-00486244","MD","OPEN","2015-06-22T17:43:35.000","21209",NA,NA
+"1500 W PATAPSCO AVE","BALTIMORE","WWSREPST","WW-Surface Repair (Stripings)","2015-03-17T15:57:01.000","2015-04-16T15:57:01.000","CHERRY HILL","15-00212089","MD","OPEN","2015-03-17T15:57:01.000","21230",NA,NA
+"1924 E LAFAYETTE AVE","BALTIMORE","WWSREPST","WW-Surface Repair (Stripings)","2015-03-02T14:49:59.000","2015-04-01T14:49:59.000","BROADWAY EAST","15-00159656","MD","OPEN","2015-03-02T14:49:59.000","21213",NA,NA
