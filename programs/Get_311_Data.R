@@ -3,6 +3,7 @@
 # For accidents and street quality
 ##############################
 rm(list=ls())
+library(methods)
 library(plyr)
 library(dplyr)
 library(jsonlite)
@@ -189,7 +190,8 @@ icode = codes[iid]
 # API Requests
 # api_key_311 = readLines("311_api_key.txt")
 # service_code = "4e39a3abd3e2c20ed800001d"
-# u <- paste0("http://311.baltimorecity.gov/open311/v2/requests.json?api_key=", api_key_311, 
+# u <- paste0("http://311.baltimorecity.gov/open311/v2/requests.json?api_key=", 
+    # api_key_311, 
 #             "&jurisdiction_id=baltimorecity.gov")
 # ## test data set
 # ff <- url(u)
