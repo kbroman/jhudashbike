@@ -17,7 +17,9 @@ homedir = path.expand("~/Dropbox/jhudash/jhudashbike")
 datadir = file.path(homedir, "data")
 outdir = file.path(homedir, "results")
 
-
+socrata_app_token = readLines(
+    file.path(homedir, "socrata_api_key.txt")
+    )
 get.lat.long.baltimore <- function(block, 
     source = "google", ...){
   location <- paste0(block, ' Baltimore, MD')
@@ -28,7 +30,6 @@ get.lat.long.baltimore <- function(block,
 }
 # Dataset from data.baltimore.gov
 # Old dataset https://data.baltimorecity.gov/resource/9agw-sxsr.json
-socrata_app_token = "F9njoSZggFjFMsjX9NDh3r8fe"
 coder = function(codes, geo = FALSE){
     stub = "https://data.baltimorecity.gov/resource"
     json = paste0(stub, "/q7s2-a6pd.", 
@@ -75,8 +76,21 @@ if (!file.exists(fname) | rerun){
         row.names = FALSE)
 }
 
-all_data = llply(codes, coder, 
-    .progress = "text")
+all_data = vector(mode = "list", 
+    length = length(codes))
+icode = codes[1]
+for (icode in codes){
+    df = coder(icode)
+    df$methodreceived = NULL
+    df = unique(df)
+    df$address = str_trim(df$address)
+    addresses = get.lat.long.baltimore(
+        df$address
+        )
+
+    all_data = llply(codes, coder, 
+        .progress = "text")
+}
 max_n = sapply(all_data, nrow)
 all_data = all_data[ max_n > 0]
 
@@ -102,7 +116,7 @@ all_df = do.call("rbind", all_df)
 # # devtools::install_github("Chicago/RSocrata")
 # df = read.socrata(page)
 
-# Socrata API - F9njoSZggFjFMsjX9NDh3r8fe
+# Socrata API - 
 # Data was from https://data.baltimorecity.gov/resource/9agw-sxsr.json
 # fname = file.path(datadir, 
 #     "311_Customer_Service_Requests.csv")
@@ -125,7 +139,7 @@ all_df = do.call("rbind", all_df)
 
 
 # API Requests
-# api_key_311 = "4973a9d4aa15d827be9c56a2605cdc4d"
+# api_key_311 = readLines("311_api_key.txt")
 # service_code = "4e39a3abd3e2c20ed800001d"
 # u <- paste0("http://311.baltimorecity.gov/open311/v2/requests.json?api_key=", api_key_311, 
 #             "&jurisdiction_id=baltimorecity.gov")
