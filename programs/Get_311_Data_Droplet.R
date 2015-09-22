@@ -59,8 +59,9 @@ all_data = vector(mode = "list",
     length = length(codes))
 names(all_data) = codes
 
+iids = c(2L, 13L, 14L)
 iid <- as.numeric(Sys.getenv("SGE_TASK_ID"))
-if (is.na(iid)) iid <- 37
+if (is.na(iid)) iid <- 2
 
 icode = codes[iid]
 # for (icode in codes){
@@ -68,18 +69,21 @@ icode = codes[iid]
         df = coder(icode)
         df$methodreceived = NULL
         df = unique(df)
+        print(nrow(df))
         df$address = str_trim(df$address)
         n = 2500
-        # if (nrow(df) > n){
+        fname = file.path(datadir, 
+            paste0(icode, ".csv"))         
+        if (nrow(df) > n){
             ind = seq(1, ceiling(nrow(df)/n))
             df$i = rep(
                 ind, 
                 each = n)[seq(nrow(df))]
-            iind = 5
+            iind = 8
             df$lat = df$lon = NA
             # for (iind in ind){
-            fname = file.path(datadir, 
-                paste0(icode, "_", iind, ".csv")) 
+                fname = file.path(datadir, 
+                    paste0(icode, "_", iind, ".csv")) 
 
                 log_ind = df$i == iind
                 ddf = df[ log_ind, ]
@@ -93,3 +97,14 @@ icode = codes[iid]
                 write.csv(x = ddf, 
                     file = fname, 
                     row.names = FALSE)  
+            # }
+        } else {
+            addresses = get.lat.long.baltimore(
+                df$address,
+                    source = "google"
+                )
+            df = cbind(df, addresses)
+            write.csv(x = df, 
+                file = fname, 
+                row.names = FALSE)              
+        }
