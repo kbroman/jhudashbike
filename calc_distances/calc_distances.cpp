@@ -157,7 +157,7 @@ NumericMatrix calc_dist_pt2pt(NumericMatrix pt1, NumericMatrix pt2, bool scale_t
 
     for(int i=0; i<nr1; i++) {
         for(int j=0; j<nr2; j++) {
-            result(i,j) = calc_dist_pt2pt_one(pt1a(i,_), pt2a(j,_));
+            result(i,j) = calc_dist_pt2pt_one(pt1a(i,_), pt2a(j,_), false);
         }
     }
 
@@ -206,7 +206,7 @@ double calc_dist_pt2line(NumericVector pt, NumericMatrix seg, bool scale_to_km=f
     double x2=sega(1,0), y2=sega(1,1);
 
     return fabs((x2-x1)*(y1-y0) - (x1-x0)*(y2-y1))/
-        sqrt((x2-x1)*(x2-x1) - (y2-y1)*(y2-y1));
+        sqrt((x2-x1)*(x2-x1) + (y2-y1)*(y2-y1));
 }
 
 
@@ -273,19 +273,19 @@ double calc_dist_pt2seg(NumericVector pt, NumericMatrix seg, bool scale_to_km=tr
     }
 
     // project point onto line
-    NumericVector projection = project_pt2line(pta, sega);
+    NumericVector projection = project_pt2line(pta, sega, false);
 
     // distance from projection to endpoints of the segment
-    double proj_to_start = calc_dist_pt2pt_one(projection, sega(0,_));
-    double proj_to_end = calc_dist_pt2pt_one(projection, sega(1,_));
+    double proj_to_start = calc_dist_pt2pt_one(projection, sega(0,_), false);
+    double proj_to_end = calc_dist_pt2pt_one(projection, sega(1,_), false);
 
     // length of the segment
-    double seg_length = calc_dist_pt2pt_one(sega(0,_), sega(1,_));
+    double seg_length = calc_dist_pt2pt_one(sega(0,_), sega(1,_), false);
 
     if(proj_to_start >= seg_length ||
        proj_to_end >= seg_length) { // projection outside segment
-        double pt_to_start = calc_dist_pt2pt_one(pta, sega(0,_));
-        double pt_to_end = calc_dist_pt2pt_one(pta, sega(1,_));
+        double pt_to_start = calc_dist_pt2pt_one(pta, sega(0,_), false);
+        double pt_to_end = calc_dist_pt2pt_one(pta, sega(1,_), false);
         if(pt_to_start <= pt_to_end)
             return pt_to_start;
         else
@@ -293,7 +293,7 @@ double calc_dist_pt2seg(NumericVector pt, NumericMatrix seg, bool scale_to_km=tr
     }
     else { // projection is on the line segment
         // return distance from point to line
-        return calc_dist_pt2line(pta, sega);
+        return calc_dist_pt2line(pta, sega, false);
     }
 }
 
@@ -305,5 +305,62 @@ function(pt, seg, scale_to_km=TRUE)
     stopifnot(ncol(seg)==2)
 
     .calc_dist_pt2seg(pt, as.matrix(seg), scale_to_km)
+}
+*/
+
+// calculate minimum distance between points x
+// and a path y1 -> y2 -> y3 -> .. -> yn
+// pt and seg should be (longitude, latitude)
+//
+// [[Rcpp::export(".calc_dist_pts2path")]]
+NumericVector calc_dist_pts2path(NumericMatrix pts, NumericMatrix path, bool scale_to_km=true)
+{
+    const int n_pts = pts.rows();
+    const int n_seg = path.rows()-1;
+
+    if(pts.cols()!=2) throw std::invalid_argument("pts should have two columns");
+    if(path.cols()!=2) throw std::invalid_argument("path should have two columns");
+
+    NumericVector res4pt(n_seg);
+    NumericVector result(n_pts);
+    NumericMatrix tmpseg(2,2);
+
+    NumericMatrix ptsa(n_pts,2);
+    NumericMatrix patha(n_seg+1,2);
+    if(scale_to_km) {
+        ptsa = rescale_points_matrix(pts);
+        patha = rescale_points_matrix(path);
+    }
+    else {
+        for(int j=0; j<2; j++) {
+            for(int i=0; i<n_pts; i++)
+                ptsa(i,j) = pts(i,j);
+            for(int i=0; i<n_seg+1; i++)
+                patha(i,j) = path(i,j);
+        }
+    }
+
+    for(int j=0; j<n_pts; j++) {
+        for(int i=0; i<n_seg; i++) {
+            for(int k=0; k<2; k++) {
+                tmpseg(0,k) = path(i,k);
+                tmpseg(1,k) = path(i+1,k);
+            }
+
+            res4pt[i] = calc_dist_pt2seg(pts(j,_), tmpseg, false);
+        }
+        result[j] = max(res4pt);
+    }
+    return result;
+}
+
+/*** R
+calc_dist_pts2path <-
+function(pts, path, scale_to_km=TRUE)
+{
+    stopifnot(ncol(pts)==2)
+    stopifnot(ncol(path)==2)
+
+    .calc_dist_pts2path(as.matrix(pts), as.matrix(path), scale_to_km)
 }
 */

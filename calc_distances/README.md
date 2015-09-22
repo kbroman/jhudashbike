@@ -15,6 +15,7 @@ Load the code with
 
 The R functions it creates:
 
+    calc_dist_pts2path(pts, path) # for each pt in pts, calc min dist to segments in path
     calc_dist_pt2pt(pt1, pt2) # pt1 and pt2 are each matrices with 2 cols
     calc_dist_pt2seg(pt1, seg) # pt1 is vector of length 2; seg is matrix with 2 rows and 2 cols
     rescale_pts(pt) # pt is matrix with long, lat; rescales from degrees to km
