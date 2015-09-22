@@ -53,3 +53,26 @@ for (icode in codes){
     all_data[[icode]] = df
     print(icode) 
 }
+
+max_n = sapply(all_data, nrow)
+all_data = all_data[ max_n > 0]
+
+all_ncols = sapply(all_data, ncol)
+cn = lapply(all_data, colnames)
+all_cn = sort(unique(unlist(cn)))
+
+all_df = llply(all_data, function(x){
+    cnx = colnames(x)
+    icn = setdiff(all_cn,cnx) 
+    for (iicn in seq_along(icn)){
+        x[, icn[iicn]] = NA
+    }
+    x
+})
+all_df = do.call("rbind", all_df)
+all_df$lon[ is.na(all_df$lon)] = all_df$long[ is.na(all_df$lon)]
+all_df$long = NULL
+all_df$i = NULL
+
+write.csv(all_df, file = file.path(datadir, 
+    "All_Hazards.csv"), row.names = FALSE)

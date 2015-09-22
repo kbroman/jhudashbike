@@ -114,7 +114,7 @@ icode = codes[iid]
                     source = "dsk"
                     )
                 df$lat[log_ind] = addresses$lat
-                df$long[log_ind] = addresses$lon
+                df$lon[log_ind] = addresses$lon
             }
         } else {
             addresses = get.lat.long.baltimore(

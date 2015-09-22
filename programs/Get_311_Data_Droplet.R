@@ -79,7 +79,7 @@ icode = codes[iid]
             df$i = rep(
                 ind, 
                 each = n)[seq(nrow(df))]
-            iind = 8
+            iind = 9
             df$lat = df$lon = NA
             # for (iind in ind){
                 fname = file.path(datadir, 
