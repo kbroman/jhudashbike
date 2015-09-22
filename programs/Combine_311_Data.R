@@ -80,7 +80,7 @@ write.csv(all_df, file = file.path(datadir,
 
 df = all_df[, c("lat", "lon", 
     "code", "codedescription")]
-df = df[ !is.na(df$lat) & !is.na(df$lon), ]
+df = df[ !(is.na(df$lat) | is.na(df$lon)), ]
 rownames(df) = NULL
 write.csv(all_df, file = file.path(outdir, 
     "Hazards.csv"), row.names = FALSE)
