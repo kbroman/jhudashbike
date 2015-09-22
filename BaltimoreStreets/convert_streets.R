@@ -55,9 +55,9 @@ convert_streets <-
         result[[i]] <- list(name     = fn,
                             number   = bl,
                             position = grab_coord(vec[start[i]+1]),
-                            path1    = grab_coord(vec[start[i]+2]))
+                            path1    = as.data.frame(grab_coord(vec[start[i]+2])))
         if(start[i]+3 < end[i])
-            result[[i]]$path2 <- grab_coord(vec[start[i]+3])
+            result[[i]]$path2 <- as.data.frame(grab_coord(vec[start[i]+3]))
     }
     result
 }
