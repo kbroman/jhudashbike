@@ -60,6 +60,9 @@ colnames(acc) = c("lat", "lon", "type")
 
 
 df = rbind(haz, arrests, acc)
+rownames(df) = NULL
+
+
 
 # from = "2120 Moyer Street, Baltimore MD"
 from = "Bank St and Conkling St, Baltimore maryland"
