@@ -6,7 +6,7 @@ rerun = FALSE
 # homedir = datadir = "~/"
 homedir = path.expand("~/Dropbox/jhudash/jhudashbike")
 datadir = file.path(homedir, "Arrests")
-outdir = file.path(homedir, "results")
+outdir = file.path(homedir, "clean_data")
 progdir = file.path(homedir, "programs")
 source(file.path(progdir, "points.in.baltimore.R"))
 
@@ -34,4 +34,14 @@ keep[ ss %in% keep_type ] = TRUE
 
 df = arrests[keep, ]
 
-point.in.polygon(point.x, point.y, pol.x, )
+keep = points.in.baltimore(df$long, df$lat)
+balt_df = df[ keep, ]
+
+balt_df$lon = balt_df$long
+balt_df$address = balt_df$ArrestLocation
+balt_df$description = balt_df$ChargeDescription
+balt_df = balt_df[, c("lat", "lon", 
+    "address", "description")]
+write.csv(balt_df, 
+    file = file.path(outdir, "Violent_Arrests.csv"),
+    row.names = FALSE)
