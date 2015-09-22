@@ -1,0 +1,35 @@
+---
+output: html_document
+---
+
+<h3 style="font-size:60px">JHU DaSH bike project</h3>
+
+```{r map, echo=FALSE}
+streets <- readRDS("../BaltimoreStreets/streets.rds")
+
+bdy <- matrix(c(-76.7113,39.372, -76.5297,39.372, -76.5299,39.2096, -76.5497,39.1972,
+                -76.5837,39.2081, -76.6116,39.2344, -76.7112,39.2778, -76.7113,39.372),
+              ncol=2, byrow=TRUE)
+bdy <- as.data.frame(bdy)
+colnames(bdy) <- c("lng", "lat")
+
+library(leaflet)
+map <- leaflet(width=900, height=600) %>%
+    fitBounds(min(bdy$lng), min(bdy$lat), max(bdy$lng), max(bdy$lat)) %>%
+    addProviderTiles("CartoDB.Positron") %>%
+    addPolygons(lng=bdy$lng, lat=bdy$lat,
+                fill=FALSE, color="darkslateblue", opacity=0.4, weight=4)
+n_path <- 250
+u <- sample(length(streets), n_path)
+map_paths <- map
+for(i in u)
+    map_paths %<>% addPolylines(lng=streets[[i]]$path1$lng,
+                                lat=streets[[i]]$path1$lat,
+                                color="violetred", weight=4)
+map_paths
+```
+
+<ul style="font-size:40px">
+<li> Characterize street quality for biking</li>
+<li> Accidents, bike routes, potholes, traffic, ...</li>
+<li> Street locations</li>
