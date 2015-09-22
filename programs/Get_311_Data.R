@@ -14,10 +14,10 @@ library(data.table)
 library(stringr)
 library(ggmap)
 rerun = FALSE
-homedir = datadir = "~/"
-# homedir = path.expand("~/Dropbox/jhudash/jhudashbike")
-# datadir = file.path(homedir, "data")
-# outdir = file.path(homedir, "results")
+# homedir = datadir = "~/"
+homedir = path.expand("~/Dropbox/jhudash/jhudashbike")
+datadir = file.path(homedir, "data")
+outdir = file.path(homedir, "results")
 
 socrata_app_token = readLines(
     file.path(homedir, "socrata_api_key.txt")
@@ -87,7 +87,7 @@ all_data = vector(mode = "list",
 names(all_data) = codes
 
 iid <- as.numeric(Sys.getenv("SGE_TASK_ID"))
-if (is.na(iid)) iid <- 10
+if (is.na(iid)) iid <- 37
 
 icode = codes[iid]
 # for (icode in codes){
