@@ -40,45 +40,16 @@ all_data = vector(mode = "list",
     length = length(codes))
 names(all_data) = codes
 
-icode = codes[iid]
+fnames = file.path(datadir, 
+    paste0(codes, ".csv"))
+names(fnames) = codes
+icode = codes[1]
+    fname = fnames[icode]
+
 for (icode in codes){
-    fname = file.path(datadir, 
-        paste0(icode, ".csv"))
-    if (!file.exists(fname) | rerun){    
-        df = coder(icode)
-        df$methodreceived = NULL
-        df = unique(df)
-        df$address = str_trim(df$address)
-        n = 2500
-        if (nrow(df) > n){
-            ind = seq(1, ceiling(nrow(df)/n))
-            df$i = rep(
-                ind, 
-                each = n)[seq(nrow(df))]
-            iind = 1
-            df$lat = df$lon = NA
-            for (iind in ind){
-                log_ind = df$i == iind
-                ddf = df[ log_ind, ]
-                addresses = get.lat.long.baltimore(
-                    ddf$address,
-                    source = "dsk"
-                    )
-                df$lat[log_ind] = addresses$lat
-                df$long[log_ind] = addresses$lon
-            }
-        } else {
-            addresses = get.lat.long.baltimore(
-                df$address,
-                    source = "dsk"
-                )
-            df = cbind(df, addresses)
-        }
-        write.csv(x = df, 
-            file = fname, 
-            row.names = FALSE)  
-    } else {
-        df = read.csv(fname, 
+    fname = fnames[icode]
+    df = read.csv(fname, 
             as.is=TRUE)
-    }
+    all_data[[icode]] = df
+    print(icode) 
 }
