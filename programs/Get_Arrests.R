@@ -18,4 +18,7 @@ arrests$Location.1 <- gsub("\\)","", arrests$Location.1)
 arrests$lat <- gsub(",.*$","",arrests$Location.1)
 arrests$long <- gsub("^.*, ","",arrests$Location.1)
 
-arrests <- arrests[]
+arrests <- arrests[, c("ArrestDate","ArrestTime","ArrestLocation","lat","long",
+                       "ChargeDescription")]
+
+save(arrests, file = "Arrests/arrests.rda")
