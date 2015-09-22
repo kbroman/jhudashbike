@@ -19,15 +19,15 @@ grab_coord <-
     result <- xml(txt) %>%
         html_nodes(xpath="//coordinates//text()") %>%
             capture.output()
-    latlong <- as.numeric(strsplit(result[2], ",|\\s")[[1]])
-    if(length(latlong)==2) {
-        names(latlong) <- c("lat", "long")
+    longlat <- as.numeric(strsplit(result[2], ",|\\s")[[1]])
+    if(length(longlat)==2) {
+        names(longlat) <- c("lng", "lat")
     }
     else {
-        latlong <- matrix(latlong, ncol=2, byrow=TRUE)
-        colnames(latlong) <- c("lat", "long")
+        longlat <- matrix(longlat, ncol=2, byrow=TRUE)
+        colnames(longlat) <- c("lng", "lat")
     }
-    latlong
+    longlat
 
 }
 
