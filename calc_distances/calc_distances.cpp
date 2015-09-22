@@ -185,6 +185,7 @@ function(pt1, pt2, scale_to_km=TRUE)
 
 // distance from point to line
 // (from http://mathworld.wolfram.com/Point-LineDistance2-Dimensional.html)
+// [[Rcpp::export]]
 double calc_dist_pt2line(NumericVector pt, NumericMatrix seg, bool scale_to_km=false)
 {
     NumericVector pta(2);
@@ -343,13 +344,14 @@ NumericVector calc_dist_pts2path(NumericMatrix pts, NumericMatrix path, bool sca
     for(int j=0; j<n_pts; j++) {
         for(int i=0; i<n_seg; i++) {
             for(int k=0; k<2; k++) {
-                tmpseg(0,k) = path(i,k);
-                tmpseg(1,k) = path(i+1,k);
+                tmpseg(0,k) = patha(i,k);
+                tmpseg(1,k) = patha(i+1,k);
             }
 
-            res4pt[i] = calc_dist_pt2seg(pts(j,_), tmpseg, false);
+            res4pt[i] = calc_dist_pt2seg(ptsa(j,_), tmpseg, false);
+
         }
-        result[j] = max(res4pt);
+        result[j] = min(res4pt);
     }
     return result;
 }
