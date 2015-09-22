@@ -18,14 +18,14 @@ map <- leaflet(width=900, height=600) %>%
     fitBounds(min(bdy$lng), min(bdy$lat), max(bdy$lng), max(bdy$lat)) %>%
     addProviderTiles("CartoDB.Positron") %>%
     addPolygons(lng=bdy$lng, lat=bdy$lat,
-                fill=FALSE, color="darkslateblue", opacity=0.4, weight=4)
-n_path <- 250
+                fill=FALSE, color="darkslateblue", opacity=0.4, weight=2)
+n_path <- 1000
 u <- sample(length(streets), n_path)
 map_paths <- map
 for(i in u)
     map_paths %<>% addPolylines(lng=streets[[i]]$path1$lng,
                                 lat=streets[[i]]$path1$lat,
-                                color="violetred", weight=4)
+                                color="violetred", weight=2)
 map_paths
 ```
 
