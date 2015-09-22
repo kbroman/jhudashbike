@@ -8,7 +8,8 @@ homedir = path.expand("~/Dropbox/jhudash/jhudashbike")
 datadir = file.path(homedir, "Arrests")
 outdir = file.path(homedir, "results")
 progdir = file.path(homedir, "programs")
-source("points.in.baltimore.R")
+source(file.path(progdir, "points.in.baltimore.R"))
+
 load(
     file.path(datadir, 
     "arrests.rda"))
