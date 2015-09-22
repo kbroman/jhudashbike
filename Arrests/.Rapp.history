@@ -1,0 +1,3 @@
+load("/Users/johnmuschelli/Dropbox/jhudash/jhudashbike/Arrests/arrests.rda")
+ls()
+head(arrests)
