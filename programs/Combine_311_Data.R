@@ -17,7 +17,7 @@ rerun = FALSE
 # homedir = datadir = "~/"
 homedir = path.expand("~/Dropbox/jhudash/jhudashbike")
 datadir = file.path(homedir, "data")
-outdir = file.path(homedir, "results")
+outdir = file.path(homedir, "clean_data")
 
 all_codes = c('BGESLPIN', 'BGESTLI1', 'BGESTLI2', 
     'BGESTLI3', 'ECCSLOW', 'FTRH', 'FOBRBRIT', 
@@ -74,5 +74,14 @@ all_df$lon[ is.na(all_df$lon)] = all_df$long[ is.na(all_df$lon)]
 all_df$long = NULL
 all_df$i = NULL
 
+
 write.csv(all_df, file = file.path(datadir, 
     "All_Hazards.csv"), row.names = FALSE)
+
+df = all_df[, c("lat", "lon", 
+    "code", "codedescription")]
+df = df[ !is.na(df$lat) & !is.na(df$lon), ]
+rownames(df) = NULL
+write.csv(all_df, file = file.path(outdir, 
+    "Hazards.csv"), row.names = FALSE)
+
