@@ -62,6 +62,12 @@ colnames(acc) = c("lat", "lon", "type")
 df = rbind(haz, arrests, acc)
 rownames(df) = NULL
 
+write.csv(df, file = file.path(datadir, 
+    "Hazards_Accidents_Crimes.csv"), 
+row.names = FALSE)
+
+
+
 
 
 # from = "2120 Moyer Street, Baltimore MD"
