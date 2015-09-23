@@ -366,3 +366,37 @@ function(pts, path, scale_to_km=TRUE)
     .calc_dist_pts2path(as.matrix(pts), as.matrix(path), scale_to_km)
 }
 */
+
+// calculate length of a path
+// [[Rcpp::export(".calc_pathlength")]]
+double calc_pathlength(NumericMatrix path, bool scale_to_km=true)
+{
+    double result=0.0;
+    const int n_seg = path.rows()-1;
+    if(path.cols() != 2)
+        throw std::invalid_argument("path should have two columns");
+
+    NumericMatrix patha;
+    if(scale_to_km)
+        patha = rescale_points_matrix(path);
+    else {
+        for(int i=0; i<n_seg+1; i++)
+            for(int j=0; j<2; j++)
+                patha(i,j) = path(i,j);
+    }
+
+    for(int i=0; i<n_seg; i++)
+        result += calc_dist_pt2pt_one(patha(i,_), patha(i+1,_));
+
+    return result;
+}
+
+/*** R
+calc_pathlength <-
+function(path, scale_to_km=TRUE)
+{
+  stopifnot(ncol(path) == 2)
+
+  .calc_pathlength(as.matrix(path))
+}
+*/
