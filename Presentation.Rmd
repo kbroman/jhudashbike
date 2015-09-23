@@ -23,4 +23,4 @@ output: ioslides_presentation
 
 # http://bit.ly/JHUDASHBIKE
 
-# https://github.com/kbroman/jhudashbike
+# http://kbroman.org/jhudashbike/
