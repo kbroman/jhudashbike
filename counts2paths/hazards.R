@@ -28,13 +28,13 @@ haz_counts <- sapply(haz_dpath, function(a) sum(a[,1] < 0.01))
 save(haz_counts, haz_dpath, file="haz_counts.RData")
 
 # scatterplot of relative count vs street length
-broman::grayplot(streetL,counts/(streetL+9), cex=0.5, pch=16, las=1, col="slateblue",
+broman::grayplot(streetL,haz_counts/(streetL+9), cex=0.5, pch=16, las=1, col="slateblue",
      ylab="relative count", xlab="block length (m)")
-broman::grayplot(streetL,counts/(streetL+50), cex=0.5, pch=16, las=1, col="slateblue",
+broman::grayplot(streetL,haz_counts/(streetL+50), cex=0.5, pch=16, las=1, col="slateblue",
      ylab="relative count", xlab="block length (m)")
-broman::grayplot(streetL,counts, cex=0.5, pch=16, las=1,
-     ylab="count", xlab="block length (m)", col=ifelse(counts/(streetL+50) > 0.1, "violetred", "slateblue"))
+broman::grayplot(streetL,haz_counts, cex=0.5, pch=16, las=1,
+     ylab="count", xlab="block length (m)", col=ifelse(haz_counts/(streetL+50) > 0.1, "violetred", "slateblue"))
 
 source("plots.R")
-plot_paths(paths=streets[counts/(streetL+9) > 0.5])
-plot_paths(paths=streets[counts/(streetL+50) > 0.1])
+plot_paths(paths=streets[haz_counts/(streetL+9) > 0.5])
+plot_paths(paths=streets[haz_counts/(streetL+50) > 0.1])
