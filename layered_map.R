@@ -163,21 +163,26 @@ pal <- colorFactor(
 
 
 
-m <- m %>% addCircleMarkers(lng=acc.arrest.haz.data$lon[acc.arrest.haz.data$type == 'Hazard'], lat=acc.arrest.haz.data$lat[acc.arrest.haz.data$type == 'Hazard'], opacity=pt_opacity[3],
-                     fillOpacity=pt_opacity[3], color=NA, fillColor=cols[3],
-                    , group="Hazard Events", radius = 3) %>%
-    addCircleMarkers(lng=acc.arrest.haz.data$lon[acc.arrest.haz.data$type == 'Arrest'], lat=acc.arrest.haz.data$lat[acc.arrest.haz.data$type == 'Arrest'], opacity=pt_opacity[2],
-                     fillOpacity=pt_opacity[2], color=NA, fillColor=cols[2], group="Arrest Events", radius = 3) %>%
-    addCircleMarkers(lng=acc.arrest.haz.data$lon[acc.arrest.haz.data$type == 'Accident'], lat=acc.arrest.haz.data$lat[acc.arrest.haz.data$type == 'Accident'], opacity=pt_opacity[1],
-                     fillOpacity=pt_opacity[1], color=NA, fillColor=cols[1], group="Accident Events", radius = 3)
-
-
 m <- m %>%
-    plot_paths(paths=streets[order(haz_counts, decreasing=TRUE)[1:482]], col=cols[3], group="Hazard Blocks",
+    addCircleMarkers(lng=acc.arrest.haz.data$lon[acc.arrest.haz.data$type == 'Accident'],
+                     lat=acc.arrest.haz.data$lat[acc.arrest.haz.data$type == 'Accident'], opacity=pt_opacity[1],
+                     fillOpacity=pt_opacity[1], color=NA, fillColor=cols[1],
+                     group="Accident Events", radius = 3) %>%
+    plot_paths(paths=streets[order(acc_counts, decreasing=TRUE)[1:482]], col = cols[1], group="Accident Blocks",
                opacity=path_opacity) %>%
+    addCircleMarkers(lng=acc.arrest.haz.data$lon[acc.arrest.haz.data$type == 'Arrest'],
+                     lat=acc.arrest.haz.data$lat[acc.arrest.haz.data$type == 'Arrest'],
+                     opacity=pt_opacity[2],
+                     fillOpacity=pt_opacity[2], color=NA, fillColor=cols[2],
+                     group="Arrest Events", radius = 3) %>%
     plot_paths(paths=streets[order(varr_counts, decreasing=TRUE)[1:482]], col=cols[2], group="Arrest Blocks",
                opacity=path_opacity) %>%
-    plot_paths(paths=streets[order(acc_counts, decreasing=TRUE)[1:482]], col = cols[1], group="Accident Blocks",
+    addCircleMarkers(lng=acc.arrest.haz.data$lon[acc.arrest.haz.data$type == 'Hazard'],
+                     lat=acc.arrest.haz.data$lat[acc.arrest.haz.data$type == 'Hazard'],
+                     opacity=pt_opacity[3],
+                     fillOpacity=pt_opacity[3], color=NA, fillColor=cols[3],
+                     group="Hazard Events", radius = 3) %>%
+    plot_paths(paths=streets[order(haz_counts, decreasing=TRUE)[1:482]], col=cols[3], group="Hazard Blocks",
                opacity=path_opacity) %>%
         addLayersControl(
           # baseGroups=c("CartoDB"),
