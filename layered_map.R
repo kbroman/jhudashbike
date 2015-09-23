@@ -7,10 +7,12 @@ library(maps)
 
 clean.data.dir <-  '/Users/elizabethsweeney/Dropbox/Elizabeth_Sweeney_Documents/Current_Projects/jhudashbike/clean_data/'
 
-load(paste0(clean.data.dir, 'accidents.rda'))
 load(paste0(clean.data.dir, 'bikepaths.rda'))
-hazards <- read.csv(paste0(clean.data.dir , 'Hazards.csv'))
-potholes <- hazards[hazards$code == 'POTHOLES',]
+acc.arrest.haz.data <- read.csv(paste0(clean.data.dir , 'Hazards_Accidents_Crimes.csv'))
+hazard <- acc.arrest.haz.data[acc.arrest.haz.data$type == 'Hazard',]
+arrest <- acc.arrest.haz.data[acc.arrest.haz.data$type == 'Arrest',]
+accident <- acc.arrest.haz.data[acc.arrest.haz.data$type == 'Accident',]
+
 
 icon.dir <- '/Users/elizabethsweeney/Dropbox/Elizabeth_Sweeney_Documents/Current_Projects/jhudashbike/icons/'
 
@@ -49,8 +51,28 @@ for(i in 1:length(bike.paths)){
 
 # baltimore city map
 
-m <- m %>%  addMarkers(lng = as.numeric(as.character(accident.cords$longitude)), lat = as.numeric(as.character(accident.cords$latitude)), icon = crashIcon)
 
-#potholes 
+m <- m %>% addCircleMarkers(lng=acc.arrest.haz.data$lon[acc.arrest.haz.data$type == 'Hazard'], lat=acc.arrest.haz.data$lat[acc.arrest.haz.data$type == 'Hazard'],
+                     fillOpacity=0.5, color="Orchid",
+                    , group="Hazard", radius = 1) %>%
+    addCircleMarkers(lng=acc.arrest.haz.data$lon[acc.arrest.haz.data$type == 'Arrest'], lat=acc.arrest.haz.data$lat[acc.arrest.haz.data$type == 'Arrest'],
+                     fillOpacity=0.5, color="slateblue", group="Arrest", radius = 1) %>%
+    addCircleMarkers(lng=acc.arrest.haz.data$lon[acc.arrest.haz.data$type == 'Accident'], lat=acc.arrest.haz.data$lat[acc.arrest.haz.data$type == 'Accident'],
+                     fillOpacity=0.5, color="orange", group="Accident", radius = 1) %>%
+    addLayersControl(baseGroups=c("CartoDB"),
+                     overlayGroups=c("Hazard", "Arrest", "Accident"),
+                     options=layersControlOptions(collapsed=FALSE))
 
-m <- m %>%  addMarkers(lng = potholes$lon, lat = potholes$lat, icon = bikehIcon) 
+
+
+m <- m %>%  addCircleMarkers(lng=accident.cords$lon, lat=tows$lat[stolen],
+                     popup=paste0("$", tows$charge[stolen], "\n", tows$address[stolen]),
+                     fillOpacity=0.5, color="Orchid",
+                     radius=tows$charge[stolen]/130+1, group="Stolen")
+
+
+addMarkers(lng = accident.cords$lon, lat = accident.cords$lat, icon = crashIcon)
+
+#hazards
+
+m <- m %>%  addMarkers(lng = hazard$lon, lat = hazard$lat, icon = bikeIcon) 
