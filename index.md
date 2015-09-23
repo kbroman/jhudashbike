@@ -2,8 +2,8 @@
 
 <br/>
 
-- [source code](https://github.com/kbroman/jhudashbike)
 - [Plain Baltimore map](plain_baltimore_map.html)
+- [GitHub repository](https://github.com/kbroman/jhudashbike)
 
 <br/>
 
