@@ -9,6 +9,7 @@ output: ioslides_presentation
 - https://data.baltimorecity.gov/
     - arrests
     - potholes
+    - bike paths
 - http://www-fars.nhtsa.dot.gov/Main/index.aspx
     - accidents
 
