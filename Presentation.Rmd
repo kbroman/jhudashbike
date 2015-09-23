@@ -1,0 +1,23 @@
+---
+title: "JHU DaSH Biking in Baltimore"
+author: "John Muschelli"
+date: "September 23, 2015"
+output: ioslides_presentation
+---
+
+## Data
+
+- https://data.baltimorecity.gov/
+- http://www-fars.nhtsa.dot.gov/Main/index.aspx
+
+## R Packages
+
+- `leaflet`
+- `ggmap`
+    - `geocode` function
+    - `route` function
+- `sp` - spatial data
+
+# http://bit.ly/JHUDASHBIKE
+
+# https://github.com/kbroman/jhudashbike
