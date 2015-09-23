@@ -14,8 +14,6 @@ Road hazard types included are: potholes, accidents, streets wtih high traffic, 
 - Reconsider if your route all appear red.
 - Ride along the path that has more green than red!
 
-This is a sample markdown file to help you write Markdown quickly :)
-
 ## Future Features To Add
 
 - All bike paths wil be mapped.
