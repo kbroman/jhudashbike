@@ -35,7 +35,7 @@ library(maps)
 ## Get the street locations 
 #############################################################
 location <- apply(as.matrix(bike.lane.data$block), 2, function(x) paste0(x, ', Baltimore, MD')) 
-my.map <- geocode(location)
+my.map <- geocode(location, source = 'google')
 
 
 bike.lane.data <- cbind(bike.lane.data, my.map)
