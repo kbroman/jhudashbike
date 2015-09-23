@@ -130,7 +130,8 @@ m <- leaflet() %>% setView(lng=mean(range(bdy$lon)), lat=mean(range(bdy$lat)), z
 # bike paths
 
 for(i in 1:length(bike.paths)){
-    m <- m %>% addPolylines(lng=as.matrix(bike.paths[[i]])[,1], lat=as.matrix(bike.paths[[i]])[,2])
+    m <- m %>% addPolylines(lng=as.matrix(bike.paths[[i]])[,1], lat=as.matrix(bike.paths[[i]])[,2],
+                            group="Bike Paths")
 #    print(i)
 }
 
@@ -168,14 +169,14 @@ m <- m %>% addCircleMarkers(lng=acc.arrest.haz.data$lon[acc.arrest.haz.data$type
                      fillOpacity=0.5, color=cols[1], group="Accident Events", radius = 1)
 
 m <- m %>%
-    plot_paths(paths=streets[haz_counts > 15], col=cols[3], group="Hazard Block") %>%
-    plot_paths(paths=streets[varr_counts > 15], col=cols[2], group="Arrest Block") %>%
-    plot_paths(paths=streets[acc_counts > 4], col = cols[1], group="Accident Block") %>%
+    plot_paths(paths=streets[haz_counts > 15], col=cols[3], group="Hazard Blocks") %>%
+    plot_paths(paths=streets[varr_counts > 15], col=cols[2], group="Arrest Blocks") %>%
+    plot_paths(paths=streets[acc_counts > 4], col = cols[1], group="Accident Blocks") %>%
         addLayersControl(
           # baseGroups=c("CartoDB"),
                      overlayGroups=c(
                       "Hazard Events", "Arrest Events", "Accident Events" ,
-                      "Hazard Block", "Arrest Block", "Accident Blocks"),
+                      "Hazard Blocks", "Arrest Blocks", "Accident Blocks", "Bike Paths"),
                      options=layersControlOptions(collapsed=FALSE)) %>%
     addLegend(position = "topright",
       pal = pal,
