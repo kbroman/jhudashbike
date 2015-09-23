@@ -140,6 +140,8 @@ for(i in 1:length(bike.paths)){
 
 
 cols = c("#F012BE", "#444444",  "#FF851B", "#0074D9")
+pt_opacity <- c(0.2, 0.1, 0.2, 0.1)
+
 
 types = sort(unique(
   as.character(acc.arrest.haz.data$type)))
@@ -160,13 +162,13 @@ pal <- colorFactor(
 
 
 
-m <- m %>% addCircleMarkers(lng=acc.arrest.haz.data$lon[acc.arrest.haz.data$type == 'Hazard'], lat=acc.arrest.haz.data$lat[acc.arrest.haz.data$type == 'Hazard'], opacity=0.5,
-                     fillOpacity=0.5, color=NA, fillColor=cols[3],
+m <- m %>% addCircleMarkers(lng=acc.arrest.haz.data$lon[acc.arrest.haz.data$type == 'Hazard'], lat=acc.arrest.haz.data$lat[acc.arrest.haz.data$type == 'Hazard'], opacity=pt_opacity[3],
+                     fillOpacity=pt_opacity[3], color=NA, fillColor=cols[3],
                     , group="Hazard Events", radius = 3) %>%
-    addCircleMarkers(lng=acc.arrest.haz.data$lon[acc.arrest.haz.data$type == 'Arrest'], lat=acc.arrest.haz.data$lat[acc.arrest.haz.data$type == 'Arrest'], opacity=0.5,
-                     fillOpacity=0.5, color=NA, fillColor=cols[2], group="Arrest Events", radius = 3) %>%
-    addCircleMarkers(lng=acc.arrest.haz.data$lon[acc.arrest.haz.data$type == 'Accident'], lat=acc.arrest.haz.data$lat[acc.arrest.haz.data$type == 'Accident'], opacity=0.5,
-                     fillOpacity=0.5, color=NA, fillColor=cols[1], group="Accident Events", radius = 3)
+    addCircleMarkers(lng=acc.arrest.haz.data$lon[acc.arrest.haz.data$type == 'Arrest'], lat=acc.arrest.haz.data$lat[acc.arrest.haz.data$type == 'Arrest'], opacity=pt_opacity[2],
+                     fillOpacity=pt_opacity[2], color=NA, fillColor=cols[2], group="Arrest Events", radius = 3) %>%
+    addCircleMarkers(lng=acc.arrest.haz.data$lon[acc.arrest.haz.data$type == 'Accident'], lat=acc.arrest.haz.data$lat[acc.arrest.haz.data$type == 'Accident'], opacity=pt_opacity[1],
+                     fillOpacity=pt_opacity[1], color=NA, fillColor=cols[1], group="Accident Events", radius = 3)
 
 m <- m %>%
     plot_paths(paths=streets[haz_counts > 15], col=cols[3], group="Hazard Blocks") %>%
