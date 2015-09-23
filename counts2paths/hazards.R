@@ -18,7 +18,7 @@ system.time(haz_dpath <- mclapply(seq(along=streets),
                                   function(i) find_close_pts2path(haz_pts, streets[[i]]),
                                   mc.cores=8))
 
-# street lenght in meters
+# street length in meters
 streetL <- unlist(mclapply(seq(along=streets), function(i) find_length(streets[[i]]), mc.cores=8))*1000
 
 # counts within 10 m
