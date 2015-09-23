@@ -12,12 +12,13 @@ interactive map.
 - [Plain Baltimore map](plain_baltimore_map.html)
 - [GitHub repository](https://github.com/kbroman/jhudashbike)
 
-<br/>
 
 ### Data sources
 
 - [NHTSA (for accidents)](http://www-fars.nhtsa.dot.gov)
 - [Open Baltimore (for road hazards, crime, and street locations)](https://data.baltimorecity.gov)
+
+<br/>
 
 ---
 
