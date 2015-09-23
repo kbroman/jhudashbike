@@ -18,9 +18,6 @@ interactive map.
 - [NHTSA (for accidents)](http://www-fars.nhtsa.dot.gov)
 - [Open Baltimore (for road hazards, crime, and street locations)](https://data.baltimorecity.gov)
 
-<br/>
-
----
 
 ### Team members
 
