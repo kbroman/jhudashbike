@@ -36,5 +36,7 @@ It was the zipcode area 21229 that had the most number of the major street repai
 
 According to the data from Open Baltimore, the county that has most arrest records from 01/01/2014 to 09/12/2015 are Downtown (2059). 
 
+The total arrest records in Baltimore during this peroid is 101,393. Among those, 38,421 records did not have associated nehiborhood information in the data.
+
 Cross Country, Curtis Bay Industrial Area, Evergreen, KESWICK, Lower Herring Run Park, LOYOLA/NOTRE DAME, Mt Pleasant Park, Purnell, Rosebank, Sabina-Mattfeldt, THE ORCHARDS, Villages Of Homeland, Wyman Park, Wyndhurst (WYNDHURST) were the neighborhoods that have the least number of arrests, only one during this period. 
 
