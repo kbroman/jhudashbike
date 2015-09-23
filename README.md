@@ -2,6 +2,8 @@
 
 **Mission:  Characterize and map bicycle safety in Baltimore**
 
+[Website](http://kbroman.org/jhudashbike)
+
 ### Geocoding
 
 - ggmap package (function geocode), <https://github.com/dkahle/ggmap>
