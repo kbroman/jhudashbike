@@ -1,7 +1,7 @@
 # plot a set of paths
 #   if map is provided, paths are added to it
 plot_paths <-
-    function(map, paths, col="violetred", weight=2, popup=NULL)
+    function(map, paths, col="violetred", weight=2, popup=NULL, opacity=1, group="main")
 {
     library(leaflet)
     # baltimore boundary
@@ -17,10 +17,24 @@ plot_paths <-
                     addPolygons(lng=bdy$lon, lat=bdy$lat,
                                 fill=FALSE, color="darkslateblue", opacity=0.4, weight=2)
 
-    for(i in seq(along=paths))
-        map %<>% addPolylines(lng=paths[[i]]$path1$lng,
-                              lat=paths[[i]]$path1$lat,
-                              color=col, weight=weight, popup=popup[i])
+    for(i in seq(along=paths)) {
+        if("path1" %in% names(paths[[i]])) {
+            map %<>% addPolylines(lng=paths[[i]]$path1$lng,
+                                  lat=paths[[i]]$path1$lat, opacity=opacity,
+                                  color=col, weight=weight, popup=popup[i], group=group)
+            if("path2" %in% names(paths[[i]])) {
+                map %<>% addPolylines(lng=paths[[i]]$path2$lng,
+                                      lat=paths[[i]]$path2$lat, opacity=opacity,
+                                      color=col, weight=weight, popup=popup[i], group=group)
+            }
+        }
+        else {
+            map %<>% addPolylines(lng=paths[[i]]$lng,
+                                  lat=paths[[i]]$lat, opacity=opacity,
+                                  color=col, weight=weight, popup=popup[i], group=group)
+        }
+
+    }
 
     map
 }
@@ -28,7 +42,7 @@ plot_paths <-
 # plot a set of points
 #    if map is provided, points are added to it
 plot_pts <-
-    function(map, pts, col="slateblue", weight=2, opacity=0.1, popup=NULL, radius=2)
+    function(map, pts, col="slateblue", weight=2, opacity=0.1, popup=NULL, radius=2, group="main")
 {
     library(leaflet)
     # baltimore boundary
@@ -57,7 +71,7 @@ plot_pts <-
                                   lat=pts[,"lat"],
                                   color=col, weight=weight,
                                   fillOpacity=opacity, opacity=opacity,
-                                  popup=popup, radius=radius)
+                                  popup=popup, radius=radius, group=group)
 
     map
 }
