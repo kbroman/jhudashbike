@@ -21,9 +21,16 @@ Interestingly enough, 110 out of 1,293 missing sign reports still remain open!
 The missing sign reported in Druid Hill took 175 days for the case to be closed. The average time for the city to resolve the missing street sign case is 36.6 days.
 
 ##Icy Road Condition
+
 The area that had most reports about the icy road condition is zipcode 21206 with 771 reports from 10/24/2015 to 08/04/2015. The area that has the least number of icy condition reports is zipcode 21213, 21240, 21251, 21287 with only 1 report.  
 
 The longest time during which the icy condition report was open was 22 days. The city addresses the icy road condition in 0.45 day on average. 
+
+##Major Street Repiars
+
+There have been 11 major street repairs from 2014-09-29 to 2015-08-04. The longest days for teh city to take to complete the street repair was 81 days. The average time for the city to take to complete the street repair was 36.6 days.
+
+It was the zipcode area 21229 that had the most number of the major street repair with 4 steret repairs. The areas where major street repairs took place are: 21205, 21207, 21214, 21229, 21230.
 
 ##Arrests
 
