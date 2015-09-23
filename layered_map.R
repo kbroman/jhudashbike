@@ -140,7 +140,8 @@ for(i in 1:length(bike.paths)){
 
 
 cols = c("#F012BE", "#444444",  "#FF851B", "#0074D9")
-pt_opacity <- c(0.2, 0.1, 0.2, 0.1)
+pt_opacity <- rep(0.2, 4)
+path_opacity <- 0.5
 
 
 types = sort(unique(
@@ -170,10 +171,14 @@ m <- m %>% addCircleMarkers(lng=acc.arrest.haz.data$lon[acc.arrest.haz.data$type
     addCircleMarkers(lng=acc.arrest.haz.data$lon[acc.arrest.haz.data$type == 'Accident'], lat=acc.arrest.haz.data$lat[acc.arrest.haz.data$type == 'Accident'], opacity=pt_opacity[1],
                      fillOpacity=pt_opacity[1], color=NA, fillColor=cols[1], group="Accident Events", radius = 3)
 
+
 m <- m %>%
-    plot_paths(paths=streets[haz_counts > 15], col=cols[3], group="Hazard Blocks") %>%
-    plot_paths(paths=streets[varr_counts > 15], col=cols[2], group="Arrest Blocks") %>%
-    plot_paths(paths=streets[acc_counts > 4], col = cols[1], group="Accident Blocks") %>%
+    plot_paths(paths=streets[order(haz_counts, decreasing=TRUE)[1:482]], col=cols[3], group="Hazard Blocks",
+               opacity=path_opacity) %>%
+    plot_paths(paths=streets[order(varr_counts, decreasing=TRUE)[1:482]], col=cols[2], group="Arrest Blocks",
+               opacity=path_opacity) %>%
+    plot_paths(paths=streets[order(acc_counts, decreasing=TRUE)[1:482]], col = cols[1], group="Accident Blocks",
+               opacity=path_opacity) %>%
         addLayersControl(
           # baseGroups=c("CartoDB"),
                      overlayGroups=c(
