@@ -1,6 +1,13 @@
 ## JHU DaSH Bike Project
 
-<br/>
+As part of the
+[JHU Data Science Hackathon (DaSH)](https://github.com/seankross/jhudash),
+we sought to characterize and map bicycle safety in Baltimore. We
+used data on accidents, crime, and road hazards (such as potholes)
+from [Open Baltimore](https://data.baltimorecity.gov/),
+mapped them to street locations, and used the
+[leaflet](https://rstudio.github.io/leaflet/) package to create an
+interactive map.
 
 - [Plain Baltimore map](plain_baltimore_map.html)
 - [GitHub repository](https://github.com/kbroman/jhudashbike)
