@@ -9,7 +9,7 @@ mapped them to street locations, and used the
 [leaflet](https://rstudio.github.io/leaflet/) package to create an
 interactive map.
 
-- [Plain Baltimore map](plain_baltimore_map.html)
+- [Out product](jhudashbike.html)
 - [GitHub repository](https://github.com/kbroman/jhudashbike)
 
 
