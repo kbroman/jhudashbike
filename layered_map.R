@@ -1,4 +1,4 @@
-library(png) 
+library(png)
 library(ggmap)
 library(leaflet)
 library(plyr)
@@ -8,7 +8,8 @@ library(magrittr)
 library(sp)
 
 # dashdir = "/Users/elizabethsweeney/Dropbox/Elizabeth_Sweeney_Documents/Current_Projects/jhudashbike/"
-dashdir = "~/Dropbox/jhudash/jhudashbike"
+#dashdir = "~/Dropbox/jhudash/jhudashbike"
+dashdir = "."
 dashdir = path.expand(dashdir)
 
 clean.data.dir <-  file.path(dashdir, 'clean_data')
@@ -16,7 +17,7 @@ block.dir <- file.path(dashdir, 'counts2paths')
 street.dir <- file.path(dashdir, 'BaltimoreStreets')
 
 
-### some functions we need 
+### some functions we need
 
 plot_paths <-
     function(map, paths, col="violetred", weight=4, popup=NULL, opacity=0.8, group="main")
@@ -94,9 +95,9 @@ plot_pts <-
     map
 }
 
-### end of functions 
+### end of functions
 
-##load in the data 
+##load in the data
 
 
 load(file.path(clean.data.dir, 'bikepaths.rda'))
@@ -110,7 +111,7 @@ load(file.path(block.dir, 'varr_counts.RData'))
 streets <- readRDS(file.path(street.dir, "streets.rds"))
 
 ss = SpatialPointsDataFrame(
-  coords = acc.arrest.haz.data[, c("lon", "lat")], 
+  coords = acc.arrest.haz.data[, c("lon", "lat")],
   data = acc.arrest.haz.data)
 # baltimore city boundary
 
@@ -122,21 +123,22 @@ colnames(bdy) <- c("lon", "lat")
 
 # baltimore city map
 
-m <- leaflet() %>% fitBounds(min(bdy$lon), min(bdy$lat), max(bdy$lon), max(bdy$lat)) %>% addProviderTiles("CartoDB.Positron") %>% addPolygons(lng=bdy$lon, lat=bdy$lat)
+m <- leaflet() %>% setView(lng=mean(range(bdy$lon)), lat=mean(range(bdy$lat)), zoom=12) %>%
+    addProviderTiles("CartoDB.Positron") %>%
+    addPolygons(lng=bdy$lon, lat=bdy$lat, fillOpacity=0, color="#999", weight=3)
 
-# bike paths 
+# bike paths
 
 for(i in 1:length(bike.paths)){
-	m <- m %>% addPolylines(lng=as.matrix(bike.paths[[i]])[,1], lat=as.matrix(bike.paths[[i]])[,2])
-    print(i) 	
+    m <- m %>% addPolylines(lng=as.matrix(bike.paths[[i]])[,1], lat=as.matrix(bike.paths[[i]])[,2])
+#    print(i)
 }
 
 
 # baltimore city map
 
 
-cols = c("Orchid", "black", 
-  "orange", "blue")
+cols = c("#F012BE", "#444444",  "#FF851B", "#0074D9")
 
 types = sort(unique(
   as.character(acc.arrest.haz.data$type)))
@@ -148,35 +150,35 @@ pal <- colorFactor(
   domain = types
 )
 
-# m <- m %>% 
+# m <- m %>%
 #   addCircleMarkers(
 #   fillOpacity=0.5, color=~pal(type),
 #   data = ss,
 #   group = ~ paste0(as.character(type), " Events"),
-#   , radius = 1) 
+#   , radius = 1)
 
 
 
 m <- m %>% addCircleMarkers(lng=acc.arrest.haz.data$lon[acc.arrest.haz.data$type == 'Hazard'], lat=acc.arrest.haz.data$lat[acc.arrest.haz.data$type == 'Hazard'],
-                     fillOpacity=0.5, color="Orchid",
+                     fillOpacity=0.5, color=cols[3],
                     , group="Hazard Events", radius = 1) %>%
     addCircleMarkers(lng=acc.arrest.haz.data$lon[acc.arrest.haz.data$type == 'Arrest'], lat=acc.arrest.haz.data$lat[acc.arrest.haz.data$type == 'Arrest'],
-                     fillOpacity=0.5, color="black", group="Arrest Events", radius = 1) %>%
+                     fillOpacity=0.5, color=cols[2], group="Arrest Events", radius = 1) %>%
     addCircleMarkers(lng=acc.arrest.haz.data$lon[acc.arrest.haz.data$type == 'Accident'], lat=acc.arrest.haz.data$lat[acc.arrest.haz.data$type == 'Accident'],
-                     fillOpacity=0.5, color="orange", group="Accident Events", radius = 1) 
+                     fillOpacity=0.5, color=cols[1], group="Accident Events", radius = 1)
 
-m <- m %>% 
-    plot_paths(paths=streets[haz_counts > 15], col="black", group="Hazard Block") %>%
-    plot_paths(paths=streets[varr_counts > 15], col="orange", group="Arrest Block") %>%
-    plot_paths(paths=streets[acc_counts > 4], col = "Orchid", group="Accident Block") %>%
+m <- m %>%
+    plot_paths(paths=streets[haz_counts > 15], col=cols[3], group="Hazard Block") %>%
+    plot_paths(paths=streets[varr_counts > 15], col=cols[2], group="Arrest Block") %>%
+    plot_paths(paths=streets[acc_counts > 4], col = cols[1], group="Accident Block") %>%
         addLayersControl(
           # baseGroups=c("CartoDB"),
                      overlayGroups=c(
-                      "Hazard Events", "Arrest Events", "Accident Events" , 
+                      "Hazard Events", "Arrest Events", "Accident Events" ,
                       "Hazard Block", "Arrest Block", "Accident Blocks"),
                      options=layersControlOptions(collapsed=FALSE)) %>%
-    addLegend(position = "topright", 
-      pal = pal, 
+    addLegend(position = "topright",
+      pal = pal,
       values = types,
       opacity = 1
     )
@@ -188,7 +190,7 @@ m <- m %>%
 # John code - condensing code
 ##############################################
 # ss = SpatialPointsDataFrame(
-#   coords = acc.arrest.haz.data[, c("lon", "lat")], 
+#   coords = acc.arrest.haz.data[, c("lon", "lat")],
 #   data = acc.arrest.haz.data)
 
 # pal <- colorFactor(
@@ -196,12 +198,12 @@ m <- m %>%
 #   domain = acc.arrest.haz.data$type
 # )
 
-# m <- m %>% 
+# m <- m %>%
 #   addCircleMarkers(
 #   fillOpacity=0.5, color=~pal(type),
 #   data = ss,
-#   , radius = 1) %>% 
-#   addLegend(position = "topright", 
+#   , radius = 1) %>%
+#   addLegend(position = "topright",
 #     pal = pal, values = acc.arrest.haz.data$type,
 #     title = "Type of Problem",
 #     opacity = 1
